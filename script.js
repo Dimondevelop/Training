@@ -5,3 +5,5 @@ function sayHi() {
 function sayBye() {
     alert('Goodbye from Git!')
 }
+
+// <!--// FIX_TEST commit-->
