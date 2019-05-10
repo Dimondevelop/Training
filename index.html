@@ -7,14 +7,31 @@
     <script type="text/javascript" src="script.js"></script>
 </head>
 <body>
-
-<div class="content">
+<header class="wrapper">
+    <h1>JavaScript Tests</h1>
+</header>
+<div class="wrapper">
     <div class="buttons">
-        <input type="button" name="save" value="Зберегти" data-color="green">
-        <input type="button" name="delete" value="Видалити" data-color="red">
+        <label for="status-color-changer">Зовнішній: </label>
+        <input id="status-color-changer" type="color" name="color" value="#f0f5b9" data-block="status">
+
+        <label for="level-one-color-changer">Рівень 1: </label>
+        <input id="level-one-color-changer" type="color" name="color" value="#c1eacb" data-block="level-one">
+
+        <label for="level-two-color-changer">Рівень 2: </label>
+        <input id="level-two-color-changer" type="color" name="color" value="#6aea6f" data-block="level-two">
+
+        <label for="central-block-color-changer">Внутрішній: </label>
+        <input id="central-block-color-changer" type="color" name="color" value="#03ea0c" data-block="central-block">
     </div>
 
-    <div id="status"></div>
+    <div id="status">
+        <div id="level-one">
+            <div id="level-two">
+                <div id="central-block"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
