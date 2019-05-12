@@ -37,6 +37,11 @@ header{
     display: flex;
     justify-content: center;
 }
+
+h2 {
+    text-align: center;
+    padding-top: 30px;
+}
 header h1{
     padding: 10px;
 }
@@ -45,6 +50,7 @@ header h1{
     border: solid 1px white;
     outline: dashed 2px red;
 }
+
 #status {
     width: 600px;
     height: 600px;
