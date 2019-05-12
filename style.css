@@ -4,6 +4,8 @@
     box-sizing: border-box;
 }
 
+input {outline:none;}
+
 h1{
     margin: 0;
     padding: 0;
@@ -37,6 +39,11 @@ header{
 }
 header h1{
     padding: 10px;
+}
+
+.block-hover{
+    border: solid 1px white;
+    outline: dashed 2px red;
 }
 #status {
     width: 600px;
