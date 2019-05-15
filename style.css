@@ -130,10 +130,13 @@ header h1 { padding: 10px; }
     border: 80px solid transparent;
 }
 
-#previous:hover .arrow_left{
+.arrow_left{
     position: absolute;
     top: calc(50% - 80px);
     left: calc(-10% - 30px);
+}
+
+#previous:hover .arrow_left{
     border-right-color: rgba(120, 161, 255, 0.30);
     border-left: 0;
 }
@@ -149,10 +152,13 @@ header h1 { padding: 10px; }
 
 #next:hover { background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.25)); }
 
-#next:hover .arrow_right {
+.arrow_right{
     position: absolute;
     top: calc(50% - 80px);
     right: calc(-10% - 30px);
+}
+
+#next:hover .arrow_right {
     border-left-color: rgba(120, 161, 255, 0.30);
     border-right: 0;
 }
