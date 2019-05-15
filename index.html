@@ -11,6 +11,27 @@
     <h1>JavaScript Tests</h1>
 </header>
 <div class="wrapper">
+
+    <h2>Gallery</h2>
+    <div class="gallery">
+        <div id="previous">
+            <div class="arrow arrow_left"></div>
+        </div>
+        <div id="next">
+            <div class="arrow arrow_right"></div>
+        </div>
+        <img class="gallery_img img_active" src="images/mountains.jpg" alt="">
+        <img class="gallery_img" src="images/beach.jpg" alt="">
+        <img class="gallery_img" src="images/forest.jpg" alt="">
+        <img class="gallery_img" src="images/house_on_field.jpg" alt="">
+        <img class="gallery_img" src="images/island.jpg" alt="">
+        <img class="gallery_img" src="images/river.jpg" alt="">
+        <img class="gallery_img" src="images/stones.jpg" alt="">
+        <img class="gallery_img" src="images/sunset.jpg" alt="">
+        <div id="radio-thumbs">
+        </div>
+    </div>
+
     <h2>Color picker</h2>
     <div class="buttons">
         <label for="status-color-changer">Зовнішній: </label>
@@ -34,42 +55,7 @@
         </div>
     </div>
 
-    <h2>Gallery</h2>
-    <div class="gallery">
-        <div id="previous">
-            <div class="arrow arrow_left"></div>
-        </div>
-        <div id="next">
-            <div class="arrow arrow_right"></div>
-        </div>
-        <img class="gallery_img img_active" src="images/mountains.jpg" alt="">
-        <img class="gallery_img" src="images/beach.jpg" alt="">
-        <img class="gallery_img" src="images/forest.jpg" alt="">
-        <img class="gallery_img" src="images/house_on_field.jpg" alt="">
-        <img class="gallery_img" src="images/island.jpg" alt="">
-        <img class="gallery_img" src="images/river.jpg" alt="">
-        <img class="gallery_img" src="images/stones.jpg" alt="">
-        <img class="gallery_img" src="images/sunset.jpg" alt="">
-        <div id="radio-thumbs">
-        </div>
-    </div>
 </div>
 
-<footer  class="empty"></footer>
-
-<script>
-    const setting = {
-        slideStart: 0,
-        gallery: '.gallery .gallery_img',
-        nextSlideID: 'next',
-        prevSlideID: 'previous',
-        auto: true,
-        speed: 3000,
-        visibleClass: 'img_active',
-        radioThumbsID: 'radio-thumbs'
-    };
-
-    sliderTestJS(setting);
-</script>
 </body>
 </html>
