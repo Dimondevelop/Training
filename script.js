@@ -1,8 +1,8 @@
 window.onload = function () {
-/*
-  приклад об'єкту з налаштуваннями
+  // приклад об'єкту з налаштуваннями
     const setting = {
         slideStart: 0,
+        auto:true,
         prevSlideID: 'previous',
         nextSlideID: 'next',
         speed: 4000,
@@ -12,9 +12,8 @@ window.onload = function () {
     };
 
     new SliderTestJS(setting);
-*/
 
-    new SliderTestJS();
+    // new SliderTestJS();
 
     let colorChangers = document.querySelectorAll('.buttons input');
     for (let i = 0; i < colorChangers.length; i++) {
