@@ -1,4 +1,6 @@
 window.onload = function () {
+/*
+  приклад об'єкту з налаштуваннями
     const setting = {
         slideStart: 0,
         prevSlideID: 'previous',
@@ -8,7 +10,11 @@ window.onload = function () {
         radioThumbsID: 'radio-thumbs',
         reverse: false
     };
+
     new SliderTestJS(setting);
+*/
+
+    new SliderTestJS();
 
     let colorChangers = document.querySelectorAll('.buttons input');
     for (let i = 0; i < colorChangers.length; i++) {
@@ -18,7 +24,7 @@ window.onload = function () {
     }
 };
 
-function SliderTestJS(setting) {
+function SliderTestJS(setting = {}) {
     //конструктор
     let slider = this; //SliderTestJS Context
     let i = slider.slideStart || 0;
@@ -114,7 +120,7 @@ function SliderTestJS(setting) {
     };
 
     slider.setTimer(slider.speed);
-    
+
     let timeOutId = 0;
     previous.onclick = () => {
         slider.slidePrevious();
