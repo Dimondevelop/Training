@@ -23,83 +23,110 @@ window.onload = function () {
     }
 };
 
-function SliderTestJS(setting = {}) {
-    //конструктор
-    let slider = this; //SliderTestJS Context
-    let i = slider.slideStart || 0;
-    slider.gallery = setting.gallery ? document.querySelectorAll(setting.gallery) : document.querySelectorAll('.gallery .gallery_img');
-    slider.previous = setting.prevSlideID ? document.getElementById(setting.prevSlideID) : document.getElementById('previous');
-    slider.next = setting.nextSlideID ? document.getElementById(setting.nextSlideID) : document.getElementById('next');
-    slider.radioThumbs = setting.radioThumbsID ? document.getElementById(setting.radioThumbsID) : document.getElementById('radio-thumbs');
-    slider.auto = setting.auto || false;
-    slider.visibleClass = setting.visibleClass || 'img_active';
-    slider.isPause = false;
-    slider.switchTimeOut = setting.switchTimeOut || 5000;
-    if (slider.auto) {
-        slider.speed = setting.speed || 5000;
-        slider.reverse = setting.reverse || false;
+function SliderTestJS(settingLocal = {}) {
+    // конструктор
+    const sliderContext = this; // SliderTestJS Context
+    let i = sliderContext.slideStart || 0;
+    sliderContext.gallery = settingLocal.gallery ?
+        document.querySelectorAll(settingLocal.gallery) : document.querySelectorAll('.gallery .gallery_img');
+    sliderContext.previous = settingLocal.prevSlideID ?
+        document.getElementById(settingLocal.prevSlideID) : document.getElementById('previous');
+    sliderContext.next = settingLocal.nextSlideID ?
+        document.getElementById(settingLocal.nextSlideID) : document.getElementById('next');
+    sliderContext.radioThumbs = settingLocal.radioThumbsID ?
+        document.getElementById(settingLocal.radioThumbsID) : document.getElementById('radio-thumbs');
+    sliderContext.visibleClass = settingLocal.visibleClass || 'img_active';
+    sliderContext.isPause = false;
+    sliderContext.switchTimeOut = settingLocal.switchTimeOut || 5000;
+    settingLocal.auto = settingLocal.auto || false;
+    if (settingLocal.auto) {
+        settingLocal.speed = settingLocal.speed || 5000;
+        settingLocal.reverse = settingLocal.reverse || false;
     }
 
-    //переключатель назад
-    slider.slidePrevious = function () {
-        slider.gallery[i].classList.remove(slider.visibleClass);
-        if (i === 0) i = slider.gallery.length - 1;
-        else i--;
-        thumbnailSelect(slider.radioThumbs);
-        slider.gallery[i].classList.add(slider.visibleClass);
+    // метод міняє налаштування таймера або виключає його.
+    let timerId;
+    sliderContext.changeTimer = (auto, speed = 5000, reverse = false) => {
+        sliderContext.auto = auto;
+        settingLocal.speed = speed;
+        settingLocal.reverse = reverse;
+        sliderContext.setTimer(settingLocal.speed);
     };
 
-    //переключатель вперел
-    slider.slideNext = function () {
-        slider.gallery[i].classList.remove(slider.visibleClass);
-        if (i === slider.gallery.length - 1) i = 0;
-        else i++;
-        thumbnailSelect(slider.radioThumbs);
-        slider.gallery[i].classList.add(slider.visibleClass);
+    // переключатель назад
+    sliderContext.slidePrevious = () => {
+        sliderContext.gallery[i].classList.remove(sliderContext.visibleClass);
+        if (i === 0) {
+            i = sliderContext.gallery.length - 1;
+        } else {
+            i--;
+        }
+        thumbnailSelect(sliderContext.radioThumbs);
+        sliderContext.gallery[i].classList.add(sliderContext.visibleClass);
     };
 
-    //переключатель по index
-    slider.slideSwitcher = function (index) {
-        slider.gallery[i].classList.remove(slider.visibleClass);
+    // переключатель вперед
+    sliderContext.slideNext = () => {
+        sliderContext.gallery[i].classList.remove(sliderContext.visibleClass);
+        if (i === sliderContext.gallery.length - 1) {
+            i = 0;
+        } else {
+            i++;
+        }
+        thumbnailSelect(sliderContext.radioThumbs);
+        sliderContext.gallery[i].classList.add(sliderContext.visibleClass);
+    };
+
+    // переключатель по index
+    sliderContext.slideSwitcher = index => {
+        sliderContext.gallery[i].classList.remove(sliderContext.visibleClass);
         i = index;
-        thumbnailSelect(slider.radioThumbs);
-        slider.gallery[i].classList.add(slider.visibleClass);
+        thumbnailSelect(sliderContext.radioThumbs);
+        sliderContext.gallery[i].classList.add(sliderContext.visibleClass);
     };
 
-    //додати до слайдера переключателі (радіо)
-    slider.thumbnailRadioAdd = function (thumbSelector) {
-        slider.gallery.forEach(function () {
+    // додати до слайдера переключателі (радіо)
+    sliderContext.thumbnailRadioAdd = thumbSelector => {
+        sliderContext.gallery.forEach(() => {
             thumbSelector.innerHTML += '<input name="thumbnail" type="radio">';
         });
-        slider.thumbInputs = thumbSelector.querySelectorAll('input');
-        slider.thumbInputs[i].checked = true;
-        slider.thumbInputs.forEach(function (element, index) {
-            element.addEventListener('click', function () {
-                slider.slideSwitcher(index);
-                timeOutId = slider.slideSwitchTimeOut(timeOutId);
-            })
-        })
+        sliderContext.thumbInputs = thumbSelector.querySelectorAll('input');
+        sliderContext.thumbInputs[i].checked = true;
+        sliderContext.thumbInputs.forEach((element, index) => {
+            element.addEventListener('click', () => {
+                sliderContext.slideSwitcher(index);
+                timeOutId = sliderContext.slideSwitchTimeOut(timeOutId);
+            });
+        });
     };
 
-    //обрати всі інпути в селекторі thumbInputs та відмічати номер відповідний до номеру показаного слайду
+    // обрати всі інпути в селекторі thumbInputs та відмічати номер відповідний до номеру показаного слайду
     function thumbnailSelect(thumbSelector) {
-        let thumbInputs = thumbSelector.querySelectorAll('input');
+        const thumbInputs = thumbSelector.querySelectorAll('input');
         thumbInputs[i].checked = true;
     }
-    slider.thumbnailRadioAdd(slider.radioThumbs);
 
-    /*f приймає на вхід швидкість автопереключення слайдів та в залежності від обраного користувачем параметру reverse
-    встановлює таймер на функцію переключення слайдеру. Автопереключення відбувається тільки якщо не пауза.
-    Повертає ID встановленого таймеру*/
-    slider.setTimer = function (speed) {
-        let timerId = 0;
-        if (slider.auto && slider.reverse) {
+    sliderContext.thumbnailRadioAdd(sliderContext.radioThumbs);
+
+    /* f приймає на вхід швидкість автопереключення слайдів та в залежності від обраного користувачем параметру reverse
+    встановлює таймер на функцію переключення слайдеру, якщо таймер вже встановлений спочатку видаляє старий.
+    Автопереключення відбувається тільки якщо не пауза. Повертає ID встановленого таймеру */
+    sliderContext.setTimer = speed => {
+        if (timerId) {
+            clearInterval(timerId);
+            timerId = null;
+        }
+        if (sliderContext.auto && settingLocal.reverse) {
             timerId = setInterval(() => {
-                if (!slider.isPause) slider.slidePrevious();
+                if (!sliderContext.isPause) {
+                    sliderContext.slidePrevious();
+                }
             }, speed);
-        } else if (slider.auto) {
+        } else if (sliderContext.auto) {
             timerId = setInterval(() => {
-                if (!slider.isPause) slider.slideNext();
+                if (!sliderContext.isPause) {
+                    sliderContext.slideNext();
+                }
             }, speed);
         }
         return timerId;
@@ -109,25 +136,29 @@ function SliderTestJS(setting = {}) {
     ставить таймер на обраний час (за замовчуванням 5 сек), після чого його назад на false.
     Якщо таймер вже був встановлений, спочатку видаляється старий таймер, після чого встановлюється новий.
     повертає id встановленого таймеру*/
-    slider.slideSwitchTimeOut = function (timeOutId = 0) {
-        slider.isPause = true;
-        if (timeOutId !== 0) clearTimeout(timeOutId);
-        timeOutId = setTimeout(function () {
-            slider.isPause = false;
-        }, slider.switchTimeOut);
-        return timeOutId;
+    sliderContext.slideSwitchTimeOut = (timeOutIdLocal = null) => {
+        sliderContext.isPause = true;
+        if (timeOutIdLocal !== null) {
+            clearTimeout(timeOutIdLocal);
+        }
+        timeOutIdLocal = setTimeout(() => {
+            sliderContext.isPause = false;
+        }, sliderContext.switchTimeOut);
+        return timeOutIdLocal;
     };
 
-    slider.setTimer(slider.speed);
+    // запускається таймер автопрокрутки
+    timerId = sliderContext.setTimer(settingLocal.speed);
 
+    // на кнопки назад і вперед ставить EventListener на подію onclick для переключення слайдів
     let timeOutId = 0;
-    previous.onclick = () => {
-        slider.slidePrevious();
-        timeOutId = slider.slideSwitchTimeOut(timeOutId);
+    sliderContext.previous.onclick = () => {
+        sliderContext.slidePrevious();
+        timeOutId = sliderContext.slideSwitchTimeOut(timeOutId);
     };
-    next.onclick = () => {
-        slider.slideNext();
-        timeOutId = slider.slideSwitchTimeOut(timeOutId);
+    sliderContext.next.onclick = () => {
+        sliderContext.slideNext();
+        timeOutId = sliderContext.slideSwitchTimeOut(timeOutId);
     };
 }
 
